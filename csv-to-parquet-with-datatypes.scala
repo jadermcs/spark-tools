@@ -3,6 +3,8 @@
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.types.{StructType, StructField, StringType, IntegerType, DoubleType}
 
 object Csv2Parquet {
       def main(args: Array[String]): Unit = {
@@ -12,7 +14,7 @@ object Csv2Parquet {
             // cria o sc e referencia para o sqlc
             val conf = new SparkConf().setMaster("local[*]").setAppName("csv2parquet")
             val sc = new SparkContext(conf)
-            val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+            val sqlContext = new SQLContext(sc)
         
             def convert(filename: String, outparquet: String, schema: StructType): Unit = {
                   val df = sqlContext.read
