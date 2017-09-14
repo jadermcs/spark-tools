@@ -17,14 +17,16 @@ object Csv2Parquet {
             def convert(filename: String, outparquet: String, schema: StructType): Unit = {
                   val df = sqlContext.read
                             .format("com.databricks.spark.csv")
-                            .schema(schema)
-                            .option("delimiter","|")
-                            .option("nullValue","")
+                            .option("header", "true")
+                            .option("inferSchema", "true") //com schema definido nao habilitar
+                            //.schema(schema)
+                            .option("nullValue","NA")
                             .option("treatEmptyValuesAsNulls","true")
                             .load(filename)
+                  
                   df.write.parquet(outparquet)
               }
-            schema= StructType(Array(
+            schema = StructType(Array(
                               // editar conforme a estrutura dos dados
                               StructField("index", IntegerType(), True),
                               StructField("arrival_time", DoubleType(), True),
