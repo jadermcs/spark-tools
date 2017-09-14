@@ -6,18 +6,18 @@ import org.apache.spark.SparkConf
 
 object Csv2Parquet {
       def main(args: Array[String]): Unit = {
-            //recebe arquivo.csv do argparser
+            // recive file.csv from argparser
             val filein = args[0]
-            //recebe nome do folder a ser criado para salvar o parquet do argparser
+            // recive the folder name to be created for save the parquet data
             val fileout = args[1]
 
             val conf = new SparkConf().setMaster("local[*]").setAppName("csv2parquet")
             val sc = new SparkContext(conf)
 
             def convert(filename: String, outparquet: String): Unit = {
-                  //le csv definindo o cabecalho
+                  // read csv defining header
                   val df = sc.read.option("header","true").csv(filename)
-                  //salva para parquet
+                  // save to parquet
                   df.write.parquet(outparquet)
               }
 
