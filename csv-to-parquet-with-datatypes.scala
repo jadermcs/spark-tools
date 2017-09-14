@@ -9,9 +9,8 @@ import org.apache.spark.sql.types.{StructType, StructField, StringType, IntegerT
 object Csv2Parquet {
       def main(args: Array[String]): Unit = {
             val filein = args[0]
-            //recebe nome do folder a ser criado para salvar o parquet do argparser
             val fileout = args[1]
-            // cria o sc e referencia para o sqlc
+            // create a spark context with desired configs and pass to the sqlcontext
             val conf = new SparkConf().setMaster("local[*]").setAppName("csv2parquet")
             val sc = new SparkContext(conf)
             val sqlContext = new SQLContext(sc)
@@ -19,8 +18,9 @@ object Csv2Parquet {
             def convert(filename: String, outparquet: String, schema: StructType): Unit = {
                   val df = sqlContext.read
                             .format("com.databricks.spark.csv")
+                            //enables read fist line as header, if schema passed, disable the 2 subsequent lines
                             .option("header", "true")
-                            .option("inferSchema", "true") //com schema definido nao habilitar
+                            .option("inferSchema", "true") // infer the datatype for the columns
                             //.schema(schema)
                             .option("nullValue","NA")
                             .option("treatEmptyValuesAsNulls","true")
@@ -29,7 +29,7 @@ object Csv2Parquet {
                   df.write.parquet(outparquet)
               }
             schema = StructType(Array(
-                              // editar conforme a estrutura dos dados
+                              // define the datatypes for each column
                               StructField("index", IntegerType(), True),
                               StructField("arrival_time", DoubleType(), True),
                               StructField("creation_time", DoubleType(), True),
