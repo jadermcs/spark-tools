@@ -28,21 +28,21 @@ object Csv2Parquet {
                   
                   df.write.parquet(outparquet)
               }
-            schema = StructType(Array(
+            val customSchema = StructType(Array(
                               // define the datatypes for each column
-                              StructField("index", IntegerType(), true),
-                              StructField("arrival_time", DoubleType(), true),
-                              StructField("creation_time", DoubleType(), true),
-                              StructField("x", DoubleType(), true),
-                              StructField("y", DoubleType(), true),
-                              StructField("z", DoubleType(), true),
-                              StructField("user", StringType(), true),
-                              StructField("model", StringType(), true),
-                              StructField("device", StringType(), true),
-                              StructField("gt", StringType(), true)
+                              StructField("index", IntegerType, true),
+                              StructField("arrival_time", DoubleType, true),
+                              StructField("creation_time", DoubleType, true),
+                              StructField("x", DoubleType, true),
+                              StructField("y", DoubleType, true),
+                              StructField("z", DoubleType, true),
+                              StructField("user", StringType, true),
+                              StructField("model", StringType, true),
+                              StructField("device", StringType, true),
+                              StructField("gt", StringType, true)
                           ))
 
-            convert(filein, fileout, schema)
+            convert(filein, fileout, customSchema)
       }
 }
       
