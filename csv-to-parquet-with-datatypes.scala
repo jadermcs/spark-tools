@@ -20,8 +20,8 @@ object Csv2Parquet {
                             .format("com.databricks.spark.csv")
                             //enables read fist line as header, if schema passed, disable the 2 subsequent lines
                             .option("header", "true")
-                            .option("inferSchema", "true") // infer the datatype for the columns
-                            //.schema(schema)
+                            //.option("inferSchema", "true") // infer the datatype for the columns
+                            .schema(schema)
                             .option("nullValue","NA")
                             .option("treatEmptyValuesAsNulls","true")
                             .load(filename)
@@ -30,16 +30,16 @@ object Csv2Parquet {
               }
             schema = StructType(Array(
                               // define the datatypes for each column
-                              StructField("index", IntegerType(), True),
-                              StructField("arrival_time", DoubleType(), True),
-                              StructField("creation_time", DoubleType(), True),
-                              StructField("x", DoubleType(), True),
-                              StructField("y", DoubleType(), True),
-                              StructField("z", DoubleType(), True),
-                              StructField("user", StringType(), True),
-                              StructField("model", StringType(), True),
-                              StructField("device", StringType(), True),
-                              StructField("gt", StringType(), True)
+                              StructField("index", IntegerType(), true),
+                              StructField("arrival_time", DoubleType(), true),
+                              StructField("creation_time", DoubleType(), true),
+                              StructField("x", DoubleType(), true),
+                              StructField("y", DoubleType(), true),
+                              StructField("z", DoubleType(), true),
+                              StructField("user", StringType(), true),
+                              StructField("model", StringType(), true),
+                              StructField("device", StringType(), true),
+                              StructField("gt", StringType(), true)
                           ))
 
             convert(filein, fileout, schema)
