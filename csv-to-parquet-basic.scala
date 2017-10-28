@@ -6,9 +6,9 @@ import org.apache.spark.SparkConf
 
 object Csv2Parquet {
       def main(args: Array[String]): Unit = {
-            // recive file.csv from argparser
+            // receives file.csv from argparser
             val filein = args[0]
-            // recive the folder name to be created for save the parquet data
+            // receives the folder name to be created for save the parquet data
             val fileout = args[1]
 
             val conf = new SparkConf().setMaster("local[*]").setAppName("csv2parquet")
